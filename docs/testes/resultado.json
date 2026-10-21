@@ -1,0 +1,168 @@
+{
+  "api": "http://localhost:8080",
+  "iniciado_em": "2026-10-06T19:29:57.665301",
+  "cenarios": [
+    {
+      "numero": "1",
+      "nome": "Site",
+      "status": "PASSOU",
+      "duracao_s": 45.6,
+      "detalhes": {
+        "id": "prj_630777d47d02",
+        "nome": "Grao Nobre - Landing",
+        "kind": "site",
+        "arquivos": {
+          "index.html": 19273
+        },
+        "eventos": [
+          [
+            "generate",
+            "Projeto gerado"
+          ]
+        ],
+        "mensagens": 2,
+        "preflight_limpo": true,
+        "avisos": [],
+        "tem_html_completo": true,
+        "tem_formulario": true,
+        "tem_responsivo": true
+      }
+    },
+    {
+      "numero": "2",
+      "nome": "Jogo",
+      "status": "PASSOU",
+      "duracao_s": 40.7,
+      "detalhes": {
+        "id": "prj_a8325cb598a0",
+        "nome": "Cobrinha Rápida",
+        "kind": "game",
+        "arquivos": {
+          "index.html": 19605
+        },
+        "eventos": [
+          [
+            "generate",
+            "Projeto gerado"
+          ]
+        ],
+        "mensagens": 2,
+        "preflight_limpo": true,
+        "avisos": [],
+        "tem_canvas": true,
+        "tem_game_loop": true,
+        "tem_toque": true,
+        "tem_pontuacao": true
+      }
+    },
+    {
+      "numero": "3",
+      "nome": "App",
+      "status": "PASSOU",
+      "duracao_s": 48.5,
+      "detalhes": {
+        "id": "prj_169a564bf6a8",
+        "nome": "Tarefas+Prioridade",
+        "kind": "app",
+        "arquivos": {
+          "index.html": 19531
+        },
+        "eventos": [
+          [
+            "generate",
+            "Projeto gerado"
+          ]
+        ],
+        "mensagens": 2,
+        "preflight_limpo": true,
+        "avisos": [],
+        "sem_storage_bloqueado": true,
+        "tem_estado": true,
+        "tem_acessibilidade": true
+      }
+    },
+    {
+      "numero": "4",
+      "nome": "Imagem",
+      "status": "PASSOU",
+      "duracao_s": 15.9,
+      "detalhes": {
+        "id": "prj_25734be3bad3",
+        "provider": "svg",
+        "kind": "svg",
+        "bytes": 3503,
+        "svg_valido": true,
+        "sem_script": true,
+        "sem_eventos_on": true,
+        "tem_viewbox": true,
+        "arquivos_do_projeto": [
+          "image.svg",
+          "index.html"
+        ]
+      }
+    },
+    {
+      "numero": "5",
+      "nome": "Correção de bug",
+      "status": "PASSOU",
+      "duracao_s": 9.3,
+      "detalhes": {
+        "encontrou_off_by_one": true,
+        "mencionou_undefined_ou_nan": true,
+        "entregou_codigo_corrigido": true,
+        "tamanho_resposta": 2308,
+        "trecho": "Código final corrigido:\n\n```javascript\nfunction calcularMedia(notas) {\n  if (!Array.isArray(notas)) {\n    throw new TypeError('O argumento \"notas\" deve ser um array.')\n  }\n\n  const len = notas.length\n  if (len === 0) {\n    return NaN // ou poderia retornar 0, ou lançar erro, conforme regra de negócio\n  }\n\n  let soma = 0\n  for (let i = 0; i < len; i++) { // < em vez de <=\n    const valor = Number(notas[i])\n    if (Number.isNaN(valor)) {\n      throw new TypeError(`Elemento no índice ${i} não é um número válido.`)\n    }\n    soma += valor\n  }\n\n  return soma / len\n}\n\nconst resultado = calcularMedia"
+      }
+    },
+    {
+      "numero": "6",
+      "nome": "Autocorreção",
+      "status": "PASSOU",
+      "duracao_s": 79.7,
+      "detalhes": {
+        "id": "prj_8e764090db0e",
+        "preflight_antes_do_bug_estar_invisivel": true,
+        "corrigido": true,
+        "explicacao": "Causa raiz: havia um bloco de código (injetado pelo teste) que tentava acessar um elemento inexistente via document.getElementById(...) e atribuir innerHTML, o que gerou TypeError porque getElementById retornou null. Correção aplicada: substituí esse acesso direto por uma verificação simples — busco o elemento e só atribuo innerHTML se o elemento existir. Assim removi o erro sem alterar o comporta",
+        "bug_removido": true,
+        "preflight_limpo_depois": true,
+        "anti_loop_ativado": true,
+        "motivo_anti_loop": "Este mesmo erro já foi tratado; a autocorreção foi interrompida para evitar loop."
+      }
+    },
+    {
+      "numero": "7",
+      "nome": "Refino incremental",
+      "status": "PASSOU",
+      "duracao_s": 10.9,
+      "detalhes": {
+        "id": "prj_8e764090db0e",
+        "modo": "ops",
+        "ops_aplicadas": 4,
+        "autocorrecao": 0,
+        "resumo": "Aumentei o tamanho do título principal e troquei a cor de destaque (accent) para tons de verde, ajustando também o foco para combinar.",
+        "mudou_o_conteudo": true,
+        "preflight_limpo": true
+      }
+    }
+  ],
+  "saude": {
+    "status": "ok",
+    "version": "0.1.0",
+    "llm_configured": true,
+    "model": "gpt-5-mini",
+    "images": {
+      "provider": "svg",
+      "model": "svg-por-llm",
+      "fallback": null,
+      "key_configured": true
+    }
+  },
+  "terminado_em": "2026-10-06T19:34:08.438492",
+  "resumo": {
+    "total": 7,
+    "passou": 7,
+    "atencao": 0,
+    "falhou": 0
+  }
+}

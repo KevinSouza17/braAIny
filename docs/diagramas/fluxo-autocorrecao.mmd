@@ -1,0 +1,40 @@
+sequenceDiagram
+    autonumber
+    participant U as Usuário
+    participant UI as UI (React)
+    participant API as Backend brAIny
+    participant LLM as Modelo (LLM)
+    participant SB as iframe sandbox
+
+    U->>UI: "faça um jogo da cobrinha"
+    UI->>API: POST /api/projects
+    API->>LLM: prompt + regras técnicas (JSON schema)
+    LLM-->>API: arquivos { index.html }
+
+    rect rgb(30, 34, 60)
+    note over API,LLM: Ciclo de autocorreção — camada 1 (servidor, determinístico)
+    API->>API: monta preview e valida com node --check
+    API->>API: checa estrutura (html/body, <script src> local, storage proibido)
+    API->>LLM: erros encontrados + código atual
+    LLM-->>API: arquivos corrigidos
+    API->>API: revalida (até 3 tentativas, para no primeiro "sem progresso")
+    end
+
+    API-->>UI: projeto + arquivos + log de eventos
+    UI->>SB: carrega /api/projects/{id}/preview
+    SB->>SB: executa o código gerado
+
+    rect rgb(46, 30, 30)
+    note over SB,UI: Ciclo de autocorreção — camada 2 (navegador, runtime)
+    SB-->>UI: postMessage: erro de runtime / console.error / unhandledrejection
+    UI->>API: POST /api/projects/{id}/repair (erros reais)
+    API->>API: assinatura dos erros (hash) — evita repetir a mesma correção
+    API->>LLM: erros reais + código atual + correções já tentadas
+    LLM-->>API: arquivos corrigidos
+    API->>API: revalida no pré-flight e salva
+    API-->>UI: versão corrigida
+    UI->>SB: recarrega o preview (v++)
+    end
+
+    SB-->>UI: "settled" sem erros
+    UI-->>U: Preview funcionando + aviso de quantas correções ocorreram

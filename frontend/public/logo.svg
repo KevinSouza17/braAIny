@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">brAIny</title>
+  <desc id="desc">Minimal red brain mark for brAIny</desc>
+  <rect width="256" height="256" rx="56" fill="#B42318"/>
+  <g fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M102 190c-19 0-34-14-34-33 0-7-4-12-10-15-14-7-18-24-10-37 4-6 4-13 1-20-7-17 2-36 19-43 8-3 14-8 18-16 8-16 27-23 43-15 6 3 12 3 18 0 17-8 36 0 43 17 3 7 9 12 16 15 17 7 25 27 18 44-3 7-3 13 1 20 8 14 3 31-11 38-6 3-10 9-10 16 0 16-13 29-29 29h-18"/>
+    <path d="M128 48v160M97 82h23M87 123h31M136 77h31M136 117h34M122 164h-28M136 158h27"/>
+  </g>
+  <circle cx="128" cy="48" r="8" fill="#fff"/>
+  <circle cx="128" cy="208" r="8" fill="#fff"/>
+</svg>

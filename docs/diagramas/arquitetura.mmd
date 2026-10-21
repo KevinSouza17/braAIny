@@ -1,0 +1,51 @@
+flowchart TB
+    subgraph NAV["Navegador do usuário"]
+        UI["UI React + Vite + Tailwind<br/>chat · preview · código · console · log"]
+        IFRAME["iframe sandbox<br/>allow-scripts, sem same-origin<br/>origem opaca"]
+        HARNESS["Harness JS injetado<br/>window.onerror · unhandledrejection · console.error"]
+        UI -- "src=/preview (CSP restritiva)" --> IFRAME
+        IFRAME --- HARNESS
+        HARNESS -- "postMessage (erros reais)" --> UI
+    end
+
+    subgraph API["Backend FastAPI (Python)"]
+        RGEN["POST /api/projects<br/>geração"]
+        RREF["POST /api/projects/{id}/refine<br/>edição incremental (ops)"]
+        RREP["POST /api/projects/{id}/repair<br/>autocorreção"]
+        RPRE["GET .../preview<br/>CSP + harness"]
+        RCOD["POST /api/code/assist"]
+        RIMG["POST /api/images"]
+        PRE["Pré-flight determinístico<br/>node --check + regras estruturais"]
+        BLD["Montador de preview<br/>inline de CSS/JS/imagens + harness"]
+        ORQ["Orquestrador + prompts<br/>+ controle anti-loop por assinatura"]
+        LLMC["Cliente LLM<br/>OpenAI-compatível"]
+        IMGC["Imagens: provedor externo<br/>ou fallback SVG"]
+        DB[("SQLite<br/>projects · files · messages · events · assets")]
+    end
+
+    subgraph EXT["Provedores externos (configuráveis por env)"]
+        LLM["LLM<br/>GPT-5 · Claude · Gemini · Ollama/vLLM"]
+        IMGAPI["API de imagem<br/>opcional"]
+    end
+
+    UI --> RGEN
+    UI --> RREF
+    UI --> RREP
+    UI --> RCOD
+    UI --> RIMG
+    UI --> RPRE
+    RGEN --> ORQ
+    RREF --> ORQ
+    RREP --> ORQ
+    ORQ <--> LLMC
+    ORQ --> PRE
+    ORQ --> DB
+    PRE --> ORQ
+    RPRE --> BLD
+    BLD --> DB
+    RCOD --> LLMC
+    RIMG --> IMGC
+    IMGC --> IMGAPI
+    IMGC --> LLMC
+    ORQ -. "leitura de projeto" .-> DB
+    LLMC <--> LLM

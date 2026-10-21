@@ -1,0 +1,16 @@
+flowchart LR
+    A["Pedido em linguagem natural"] --> B["Classificação de intenção<br/>(kind: site · app · jogo · imagem)"]
+    B --> C["Prompt de sistema<br/>+ regras técnicas do sandbox"]
+    C --> D["LLM devolve arquivos<br/>estruturados por JSON schema"]
+    D --> E["Pré-flight<br/>sintaxe + estrutura + storage"]
+    E -->|erros| F["Reparo automático<br/>máx. 3 tentativas"]
+    F --> E
+    E -->|limpo| G[("SQLite: projeto + arquivos<br/>+ mensagens + eventos")]
+    G --> H["Preview: inline de assets<br/>+ harness + CSP"]
+    H --> I["iframe sandbox<br/>executa de verdade"]
+    I --> J{"Erros de runtime?"}
+    J -->|sim, assinatura nova| K["POST /repair<br/>modelo corrige a causa raiz"]
+    K --> E
+    J -->|não| L["Resultado pronto:<br/>conversa, preview, código, .zip"]
+    L --> M["Refino por conversa<br/>ops cirúrgicas"]
+    M --> E

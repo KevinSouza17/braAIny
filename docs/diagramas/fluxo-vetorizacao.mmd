@@ -1,0 +1,16 @@
+flowchart LR
+  U[Prompt do usuário] --> P{Provedor}
+  P -->|OpenAI| O[POST /images/generations\nGPT Image 2 / 2.5]
+  P -->|Google| G[POST /v1beta/interactions\nNano Banana 2.1 / Pro]
+  O --> R[PNG/JPEG\nb64_json ou URL]
+  G --> R2[PNG/JPEG\noutput_image.data Base64]
+  R --> N[Pillow\nnormaliza RGBA/PNG]
+  R2 --> N
+  N --> V[vtracer\ncores, contornos, splines]
+  V --> S[Sanitização\nsem script, image ou links externos]
+  S --> A[assets/id.svg\nSVG real com paths]
+  A --> E[GET /api/assets/id\nmime image/svg+xml]
+  O -. falha .-> F[Fallback SVG por código]
+  G -. falha .-> F
+  V -. falha .-> F
+  F --> S
